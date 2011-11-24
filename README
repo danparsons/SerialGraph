@@ -1,20 +1,17 @@
+Tool for graphing arbitrary data received from serial port.
 
-Shows a plot of numeric lines sent to serial port. 
-(set up for com4 right now, change in the code if neded)
+Originally designed as a replacement for the Windows-only program
+that came with my laser power meter.
 
-Install the following to run it:
-
-Python 2.6 (2.5 should probably work too)
-pyserial
+Requires Python 2.6 and the following modules:
+serial
 wx
 matplotlib
 numpy
 pylab
 
-To use, simply run:
-python wx_mpl_dynamic_graph.py
+Code heavily borrowed from Blended Technologies:
+http://www.blendedtechnologies.com/realtime-plot-of-arduino-serial-data-using-python/231
 
-from the command line.
-
-Note: Make sure you have your Arduino IDE closed, or it will block other programs
-like this one from using the serial port.
+Which was based on this demo:
+http://eli.thegreenplace.net/2008/08/01/matplotlib-with-wxpython-guis/
