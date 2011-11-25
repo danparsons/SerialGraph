@@ -24,7 +24,6 @@ def rx(ser):
 class SerialData(object):
 	"""Handle the serial port"""
 	def __init__(self, port, baudrate, bytesize, parity, stopbits, xonxoff, rtscts, debug):
-#		super(SerialData, self).__init__()
 		global DEBUG
 		self.port = port
 		self.baudrate = baudrate

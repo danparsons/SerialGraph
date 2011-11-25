@@ -64,7 +64,6 @@ class GraphFrame(wx.Frame):
 		self.hbox1.Add(self.pause_button, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
 		self.hbox1.AddSpacer(20)
 		self.hbox1.Add(self.reset_button, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
-#		self.hbox1.AddSpacer(20)
 
 		self.vbox = wx.BoxSizer(wx.VERTICAL)
 		self.vbox.Add(self.canvas, 1, flag=wx.LEFT | wx.TOP | wx.GROW)
@@ -74,8 +73,8 @@ class GraphFrame(wx.Frame):
 		self.vbox.Fit(self)
 	
 	def init_plot(self):
-		self.dpi = 200
-		self.fig = Figure((5.0, 3.0), dpi=self.dpi)
+		self.dpi = 100
+		self.fig = Figure((10.0, 6.0), dpi=self.dpi)
 		self.axes = self.fig.add_subplot(111, xlabel=self.xlabel, ylabel="mW")
 		self.axes.set_axis_bgcolor('black')
 		self.axes.set_title('test', size=12)
@@ -84,7 +83,7 @@ class GraphFrame(wx.Frame):
 		self.plot_data = self.axes.plot (
 			self.data,
 			linewidth = 1,
-			color = (1, 1, 0)
+			color = (1, 0, 0)
 		)[0]
 		
 	def on_pause_button(self, event):
