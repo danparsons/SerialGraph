@@ -4,7 +4,23 @@ Start it like this:
 python SerialGraph.py
 
 For command line argument information:
-python SerialGraph.py -h
+python SerialGraph.py -h:
+
+Usage: SerialGraph.py [options]
+Graph arbitrary data received from serial port
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -p PORT, --port=PORT  Serial port. Default: /dev/tty.usbserial
+  -b BAUDRATE, --baudrate=BAUDRATE
+                        Baud rate. Default: 9600
+  -x XLABEL, --xlabel=XLABEL
+                        Label for X axis. Default: seconds
+  -y YLABEL, --ylabel=YLABEL
+                        Label for Y axis. Default: mW
+  -d, --debug           Enable debugging messages
+
 
 Originally designed as a replacement for the Windows-only program
 that came with my laser power meter.
