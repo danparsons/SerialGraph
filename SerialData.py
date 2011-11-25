@@ -17,6 +17,8 @@ def rx(ser):
 			lines = tmpbuf.split('\n')
 			buf = lines[-2]
 			tmpbuf = lines[-1]
+			if DEBUG:
+				print "Serial data:\n%s" % lines[-2]
 
 class SerialData(object):
 	"""Handle the serial port"""
