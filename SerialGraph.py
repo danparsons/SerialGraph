@@ -25,22 +25,27 @@ def processArguments():
 	parser.set_usage("%prog [options]\nGraph arbitrary data received from serial port")
 	parser.add_option("-p", "--port", dest="port", default="/dev/tty.usbserial", help="Serial port. Default: %default")
 	parser.add_option("-b", "--baudrate", dest="baudrate", default=9600, help="Baud rate. Default: %default")
+	parser.add_option("-x", "--xlabel", dest="xlabel", default="seconds", help="Label for X axis. Default: %default")
+	parser.add_option("-y", "--ylabel", dest="ylabel", default="mW", help="Label for Y axis. Default: %default")
 	parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Enable debugging messages")
 	(options, args) = parser.parse_args()
 	return options, args
 
 class GraphFrame(wx.Frame):
 	title = 'SerialGraph'
-	def __init__(self, data):
+	def __init__(self, data, xlabel, ylabel):
 		self.datasource = data
+		self.xlabel = xlabel
+		self.ylabel = ylabel
+		self.paused = False
+		self.max = 0.0
 		self.data = [self.datasource.next()]
 		wx.Frame.__init__(self, None, -1, self.title)
 		self.create_main_panel()
 		self.redraw_timer = wx.Timer(self)
 		self.Bind(wx.EVT_TIMER, self.on_redraw_timer, self.redraw_timer)
 		self.redraw_timer.Start(REFRESH_INTERVAL_MS)
-		self.paused = False
-		self.max = 0.0
+
 		
 	def create_main_panel(self):
 		self.panel = wx.Panel(self)
@@ -71,7 +76,7 @@ class GraphFrame(wx.Frame):
 	def init_plot(self):
 		self.dpi = 200
 		self.fig = Figure((5.0, 3.0), dpi=self.dpi)
-		self.axes = self.fig.add_subplot(111, xlabel="ms", ylabel="mW")
+		self.axes = self.fig.add_subplot(111, xlabel=self.xlabel, ylabel="mW")
 		self.axes.set_axis_bgcolor('black')
 		self.axes.set_title('test', size=12)
 		pylab.setp(self.axes.get_xticklabels(), fontsize=8)
@@ -147,7 +152,7 @@ def main():
 		debug=DEBUG
 	)
 	app = wx.PySimpleApp()
-	app.frame = GraphFrame(s)
+	app.frame = GraphFrame(s, options[0].xlabel, options[0].ylabel)
 	app.frame.Show()
 	app.MainLoop()
 
