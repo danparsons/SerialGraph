@@ -1,7 +1,9 @@
 import os
+import sys
+import time
+import optparse
 import serial
 import SerialData
-import time
 import wx
 import matplotlib
 
@@ -15,6 +17,17 @@ import numpy as np
 import pylab
 
 REFRESH_INTERVAL_MS = 10
+DEBUG = False
+
+def processArguments():
+	"""Handle cli args"""
+	parser = optparse.OptionParser(version="%prog 0.1")
+	parser.set_usage("%prog [options]\nGraph arbitrary data received from serial port")
+	parser.add_option("-p", "--port", dest="port", default="/dev/tty.usbserial", help="Serial port. Default: %default")
+	parser.add_option("-b", "--baudrate", dest="baudrate", default=9600, help="Baud rate. Default: %default")
+	parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Enable debugging messages")
+	(options, args) = parser.parse_args()
+	return options, args
 
 class GraphFrame(wx.Frame):
 	title = 'SerialGraph'
@@ -119,17 +132,24 @@ class GraphFrame(wx.Frame):
 		self.axes.set_title('Current Value: %s.   Max Value: %s.' % (self.data[-1], self.max), size=12)	
 		self.canvas.draw()
 
-if __name__ == '__main__':
+def main():
+	global DEBUG
+	options = processArguments()
+	DEBUG = options[0].debug
 	s = SerialData.SerialData(
-		port='/dev/tty.usbserial', 
-		baudrate=9600, 
-		bytesize=serial.EIGHTBITS, 
+		port=options[0].port, 
+		baudrate=options[0].baudrate, 
+		bytesize=serial.EIGHTBITS,
 		parity=serial.PARITY_NONE,
 		stopbits=serial.STOPBITS_ONE,
 		xonxoff=0,
-		rtscts=0
+		rtscts=0,
+		debug=DEBUG
 	)
 	app = wx.PySimpleApp()
 	app.frame = GraphFrame(s)
 	app.frame.Show()
 	app.MainLoop()
+
+if __name__ == '__main__':
+	main()
