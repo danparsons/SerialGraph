@@ -1,5 +1,11 @@
 Tool for graphing arbitrary data received from serial port.
 
+Start it like this:
+python SerialGraph.py
+
+For command line argument information:
+python SerialGraph.py -h
+
 Originally designed as a replacement for the Windows-only program
 that came with my laser power meter.
 
