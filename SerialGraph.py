@@ -16,7 +16,7 @@ from matplotlib.backends.backend_wxagg import \
 import numpy as np
 import pylab
 
-REFRESH_INTERVAL_MS = 10
+REFRESH_INTERVAL_MS = 100
 DEBUG = False
 
 def processArguments():
@@ -113,24 +113,19 @@ class GraphFrame(wx.Frame):
 	def draw_plot(self):
 		"""Redraws the plot"""
 		width = 50
-		xmax = len(self.data) if len(self.data) > width else width
+		data_len = len(self.data)
+		xmax = data_len if data_len > width else width
 		xmin = xmax - width
-#		ymin = round(min(self.data), 0) - 1
 		ymin = 0
 
-		if len(self.data) > width:
+		if data_len > width:
 			visible_max = max(self.data[-width:])
-			ymax = int(max(visible_max*1.2, 5))
-#			ymax = max(max(self.data[-width:]), 5) + 1
 		else:
-			ymax = max(round(max(self.data), 0), 4) + 1
-		
 
 		self.axes.set_xbound(lower=xmin, upper=xmax)
 		self.axes.set_ybound(lower=ymin, upper=ymax)
 		self.axes.grid(True, color='green')
 
-		self.plot_data.set_xdata(np.arange(len(self.data)))
 		self.plot_data.set_ydata(np.array(self.data))
 		if self.data[-1] > self.max:
 			self.max = self.data[-1]

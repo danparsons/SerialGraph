@@ -11,6 +11,7 @@ def rx(ser):
 	global buf
 	tmpbuf = ''
 	while ser:
+		time.sleep(0.001)
 		# Keep reading until an entire line is in the buffer, then return the last line
 		tmpbuf = tmpbuf + ser.read(size=ser.inWaiting())
 		if '\n' in tmpbuf:
