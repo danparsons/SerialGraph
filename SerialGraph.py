@@ -119,12 +119,15 @@ class GraphFrame(wx.Frame):
 
 		if data_len > width:
 			visible_max = max(self.data[-width:])
+			ymax = max(visible_max*1.2, 5)
 		else:
+			ymax = max(max(self.data), 4) + 1
 
 		self.axes.set_xbound(lower=xmin, upper=xmax)
 		self.axes.set_ybound(lower=ymin, upper=ymax)
 		self.axes.grid(True, color='green')
 
+		self.plot_data.set_xdata(np.arange(data_len))
 		self.plot_data.set_ydata(np.array(self.data))
 		if self.data[-1] > self.max:
 			self.max = self.data[-1]
