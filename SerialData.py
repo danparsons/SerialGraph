@@ -67,17 +67,3 @@ class SerialData(object):
 	def __del__(self):
 		if self.ser:
 			self.ser.close()
-
-if __name__ == '__main__':
-	s = SerialData(
-		port='/dev/tty.usbserial', 
-		baudrate=9600, 
-		bytesize=serial.EIGHTBITS, 
-		parity=serial.PARITY_NONE,
-		stopbits=serial.STOPBITS_ONE,
-		xonxoff=0,
-		rtscts=0
-	)
-	while True:
-		time.sleep(.015)
-		print s.next()
