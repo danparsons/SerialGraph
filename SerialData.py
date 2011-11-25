@@ -44,7 +44,7 @@ class SerialData(object):
 				bytesize = self.bytesize,
 				parity = self.parity,
 				stopbits = self.stopbits,
-#				timeout = 0.1,
+				timeout = 0.1,
 				xonxoff = self.xonxoff,
 				rtscts = self.rtscts,
 				interCharTimeout = None
