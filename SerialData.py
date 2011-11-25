@@ -3,6 +3,8 @@ import serial
 import sys
 import time
 
+DEBUG = False
+
 buf = ''
 def rx(ser):
 	"""Receive serial data"""
@@ -18,8 +20,9 @@ def rx(ser):
 
 class SerialData(object):
 	"""Handle the serial port"""
-	def __init__(self, port, baudrate, bytesize, parity, stopbits, xonxoff, rtscts):
+	def __init__(self, port, baudrate, bytesize, parity, stopbits, xonxoff, rtscts, debug):
 #		super(SerialData, self).__init__()
+		global DEBUG
 		self.port = port
 		self.baudrate = baudrate
 		self.bytesize = bytesize
@@ -29,6 +32,8 @@ class SerialData(object):
 		self.rtscts = rtscts
 		self.ser = None
 		self.buf = ''
+		self.debug = debug
+		DEBUG = self.debug
 		
 		try:
 			self.ser = ser = serial.Serial(
@@ -53,7 +58,6 @@ class SerialData(object):
 			print "Serial port connection failure"
 			sys.exit(-1)
 		try:
-			print buf
 			return float(buf.split(',')[0].strip())
 		except ValueError:
 			print 'Invalid data: ', buf
